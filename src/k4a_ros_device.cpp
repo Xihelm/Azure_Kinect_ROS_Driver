@@ -555,7 +555,9 @@ k4a_result_t K4AROSDevice::getRgbPointCloudInRgbFrame(const k4a::capture& captur
   point_cloud->header.stamp = timestampToROS(k4a_depth_frame.get_device_timestamp());
   printTimestampDebugMessage("RGB point cloud", point_cloud->header.stamp);
 
-  return fillColorPointCloud(calibration_data_.point_cloud_image_, k4a_bgra_frame, point_cloud);
+  // Temporary hack because the producing the color is too slow.
+  return fillPointCloud(calibration_data_.point_cloud_image_, point_cloud);
+  // return fillColorPointCloud(calibration_data_.point_cloud_image_, k4a_bgra_frame, point_cloud);
 }
 
 k4a_result_t K4AROSDevice::getPointCloud(const k4a::capture& capture, sensor_msgs::PointCloud2Ptr& point_cloud)
